@@ -1,7 +1,7 @@
 'use strict';
 
 import '../css/base-css.css'
-//import {Card} from "../../sharedEntities/Card"
+//const Card = require("../../sharedEntities/card");
 
 
 //Elements:
@@ -10,7 +10,7 @@ let textToRead = document.querySelector('#textToRead');
 let textToSend = document.querySelector('#textToSend');
 
 //Connection:
-let server = new WebSocket("ws://localhost:8081/")
+let server = new WebSocket("ws://localhost:8081/chat")
 server.onopen = (event) =>{
     console.log('Established connection');
 };
