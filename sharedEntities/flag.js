@@ -1,6 +1,7 @@
 'use strict';
 
 const Card = require('./card');
+const Play = require('./play');
 /**
  * Represents a Flag in the Game.
  * - The flag can be taken by a player. Initially it is not taken.
@@ -53,19 +54,20 @@ module.exports = class Flag{
             return false;
         }
         
-        return isBetterHand(this.p1, this.p2);
+        return Play.isBetterHand(this.p1, this.p2);
     }
 
     claimP2(){
         //TODO
+        //This must be redone. Now you can only claim if both sides are full.
+        if(this.p1.length < 3 || this.p2.length < 3){
+            return false;
+        }
+        
+        return Play.isBetterHand(this.p2, this.p1);
     }
 
 
-    isBetterHand(hand1_, hand2_){
-        let hand1 = this.p1.slice().sort((a,b)=>a-b); //Make a sorted copy low to high.
-        let hand2 = this.p2.slice().sort((a,b)=>a-b);
 
-        evaluateHand(hand1);
-    }
 
 }
