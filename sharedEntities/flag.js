@@ -6,68 +6,64 @@ const Play = require('./play');
  * Represents a Flag in the Game.
  * - The flag can be taken by a player. Initially it is not taken.
  * - Each player can only play cards in one of the sides of the flag.
- * 
+ * - Player IDs must be String type.
  */
 module.exports = class Flag{
-    constructor(){
-        this.p1 = new Array(3).fill(null);
-        this.p2 = new Array(3).fill(null);
-        this.isTakenByP1 = null;
+    constructor(p1ID, p2ID){ //IMPORTANT ID's MUST BE STRINGS!!!
+        this.sides = {
+            [p1ID] : [], //the value of p1ID is the attribute.
+            [p2ID] : []
+        };
+        this.isTakenBy = null;
     }
 
     /**
-     * P1 in his turn plays a card in this Flag
+     * Player, "playerID" in his turn plays a card in this Flag
      * @param {*} card 
      * @returns true is card could be played 
      */
-    playP1(card){
-        if(this.isTakenByP1 !== null){
+    play(playerID, card){
+        if(this.isTakenBy !== null){
             return false;
         }
-        if(this.p1.length >= 3){
+        if(this.sides[playerID] && this.sides[playerID].length >= 3){
             return false;
         }
-        this.p1.push(card);
+        this.sides[playerID].push(card);
         return true;
     }
 
     /**
-     * Same, for player 2.
-     * Keep 2 methods for readability
+     * Player tries to claim this flag. 
+     * //TODO: To claim now, the flag must be full.
+     * @param {*} playerID 
      */
-    playP2(card){
-        if(this.isTakenByP1 !== null){
-            return false;
-        }
-        if(this.p2.length >= 3){
-            return false;
-        }
-        this.p2.push(card);
-        return true;
-    }
-
-
-    claimP1(){
+    claim(playerID){
         //TODO
         //This must be redone. Now you can only claim if both sides are full.
-        if(this.p1.length < 3 || this.p2.length < 3){
+        // A Easy approach would be passing an array of cards with all the other visible cards in the board.
+        let otherPID = this.getOtherPlayerID(playerID);
+        if((this.sides[playerID] && this.sides[playerID].length < 3) || 
+            (this.sides[otherPID] && this.sides[otherPID].length < 3)){
             return false;
         }
-        
-        return Play.isBetterHand(this.p1, this.p2);
-    }
-
-    claimP2(){
-        //TODO
-        //This must be redone. Now you can only claim if both sides are full.
-        if(this.p1.length < 3 || this.p2.length < 3){
-            return false;
+        if(Play.isBetterHand(this.sides[playerID], this.sides[otherPID]) > 0){
+            this.isTakenBy = playerID;
+            return true;
         }
-        
-        return Play.isBetterHand(this.p2, this.p1);
+        return false
     }
 
-
+    
+    //Returns the other player id
+    getOtherPlayerID(playerID){
+        for(let id in this.sides){
+            if (id != playerID){
+                return id;
+            }
+        }
+        return null;
+    }
 
 
 }

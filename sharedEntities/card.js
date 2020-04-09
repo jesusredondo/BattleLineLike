@@ -11,6 +11,10 @@ class Card {
         return `[${this.value}-${Card.colorNames[this.color]}]`
     }
 
+    isSameCardAs(card){
+        return this.value === card.value && this.color === card.color;
+    }
+
 
 }
 
@@ -22,6 +26,7 @@ Card.yellow = 3;
 Card.purple = 4;
 Card.orange = 5;
 Card.colorNames =['red', 'green', 'blue', 'yellow', 'purple', 'orange'];
+Card.numberOfColors = 6;
 
 Card.names = [
     'Skirmishers',
@@ -35,5 +40,6 @@ Card.names = [
     'Chariots',
     'Elephants'
 ];
+Card.numberOfValues = 10;
 
 module.exports = Card;
