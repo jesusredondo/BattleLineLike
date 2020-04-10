@@ -6,7 +6,7 @@ let Card = require('../card');
 
 describe('Testing Flag class', ()=> {
     beforeEach(()=>{
-        this.newBoardStringIDS = new Flag("Jesus","Pepe");
+        this.newBoardStringIDS = new Flag("Jesus","Pepe", 0);
     });
 
     describe('Checking Flag constructor',()=>{
@@ -85,7 +85,7 @@ describe('Testing Flag class', ()=> {
         });
 
 
-        it('Can claim when full and better hand //TODO: this should be reworked',()=>{ //TODO
+        it('Can claim when full and better hand. Cant claim, already taken flags.//TODO: this should be reworked',()=>{ //TODO
             //Player 1 has a wedge.
             const p1_c1 = new Card(7, Card.red);
             const p1_c2 = new Card(6, Card.red);
@@ -101,7 +101,9 @@ describe('Testing Flag class', ()=> {
             this.newBoardStringIDS.play("Pepe",p2_c2);
             this.newBoardStringIDS.play("Pepe",p2_c3);
             assert(this.newBoardStringIDS.claim("Jesus"));
+            assert.equal(false, this.newBoardStringIDS.claim("Jesus")); //Cant take twice!
             assert.equal(false, this.newBoardStringIDS.claim("Pepe"));
+            
         });
 
     });

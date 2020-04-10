@@ -41,5 +41,6 @@ Card.names = [
     'Elephants'
 ];
 Card.numberOfValues = 10;
+Card.noCard = new Card(-1,-1); //Used when no card is handed out.
 
 module.exports = Card;

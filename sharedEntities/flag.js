@@ -9,7 +9,8 @@ const Play = require('./play');
  * - Player IDs must be String type.
  */
 module.exports = class Flag{
-    constructor(p1ID, p2ID){ //IMPORTANT ID's MUST BE STRINGS!!!
+    constructor(p1ID, p2ID, position){ //IMPORTANT ID's MUST BE STRINGS!!!
+        this.position = position
         this.sides = {
             [p1ID] : [], //the value of p1ID is the attribute.
             [p2ID] : []
@@ -35,6 +36,7 @@ module.exports = class Flag{
 
     /**
      * Player tries to claim this flag. 
+     * - Can't claim already taken flags.
      * //TODO: To claim now, the flag must be full.
      * @param {*} playerID 
      */
@@ -43,11 +45,14 @@ module.exports = class Flag{
         //This must be redone. Now you can only claim if both sides are full.
         // A Easy approach would be passing an array of cards with all the other visible cards in the board.
         let otherPID = this.getOtherPlayerID(playerID);
+        if(this.isTakenBy !== null){
+            return false;
+        }
         if((this.sides[playerID] && this.sides[playerID].length < 3) || 
             (this.sides[otherPID] && this.sides[otherPID].length < 3)){
             return false;
         }
-        if(Play.isBetterHand(this.sides[playerID], this.sides[otherPID]) > 0){
+        if(Play.isBetterHand(this.sides[playerID], this.sides[otherPID]) >= 0){ //TODO: Now you can claim same value plays
             this.isTakenBy = playerID;
             return true;
         }

@@ -51,7 +51,7 @@ class Game{
         this.flags = [];
         for(let i = 0; i < Game.numberOfFlags; i++){
             this.flags.push(
-                new Flag(this.getPlayersIDArray()[0], this.getPlayersIDArray()[1]) 
+                new Flag(this.getPlayersIDArray()[0], this.getPlayersIDArray()[1], i) 
             );
         }
 
@@ -80,13 +80,21 @@ class Game{
             this.turn.player != playerID ||                             //it is his turn
             this.turn.turnStatus !== Game.playStatus ||                 //phase of playing
             flagNumber < 0 ||                                           //Flag in range [0,9]
-            flagNumber > Game.numberOfFlags ||
+            flagNumber >= Game.numberOfFlags ||
             ! Game.handContainsTroopCard(this.players[playerID], card)  //the player has this card in his hand
         ){
             return false;
         }
 
         if(this.flags[flagNumber].play(playerID, card)){
+            //Remove the used card from the player's hand: //REMOVES ONLY THE FIRST CARD IF THERE ARE DUPLICATES.
+            let indiceBorrar
+            for(indiceBorrar = 0; this.players[playerID]; indiceBorrar++){
+                if(this.players[playerID][indiceBorrar].isSameCardAs(card)){
+                    break;
+                }
+            }
+            this.players[playerID].splice(indiceBorrar,1); //Remove 1 position.
             this.turn.turnStatus = Game.drawStatus;
             return true;
         }
@@ -98,63 +106,123 @@ class Game{
     /**
      * Draw a troop card from the table to the playerID's hand.
      * - The playerID must be correct.
+     * - If there aren't more cards in the troopdeck, then return a Card.noCard.
      * @param {*} playerID 
+     * @returns false if you couldn't draw the card.
+     * @returns If draw is allowed, return the card drawed.
      */
     drawTroopCard(playerID){
         if( (!this.players[playerID]) ||
             (this.turn.player != playerID) ||
-            (this.troopDeck.length === 0) ||
             (this.turn.turnStatus !== Game.drawStatus) 
             ){
             return false;
         }
+        //TODO: REVIEW WHAT HAPPENS WHEN ALL CARDS ARE HANDED OUT.
+        let cardDrawn;
+        if(this.troopDeck.length > 0){
+            cardDrawn = this.troopDeck.pop();
+            this.players[playerID].push(cardDrawn);
+        } else{
+            cardDrawn = Card.noCard;
+        }
         
-        this.players[playerID].push(this.troopDeck.pop());
-        return true;
+        this.turn.turnStatus = Game.claimStatus;
+        return cardDrawn;
     }
 
 
-
+    
     claim(playerID, flagNumber){
         if(
             !this.players[playerID] ||
             this.turn.player != playerID ||
             this.turn.turnStatus !== Game.claimStatus ||
             flagNumber < 0 ||
-            flagNumber > Game.numberOfFlags
+            flagNumber >= Game.numberOfFlags
         ){
             return false;
         }
-        if(this.players[playerID].claim(playerID)){
+        if(this.flags[flagNumber].claim(playerID)){ //Claim success if return >= 0
             return true;
         }
         this.turn.turnStatus = Game.endTurnStatus;
         return false;
     }
 
+    /**
+     * The turn can be finished in the claim or "endTurn" stage
+     * @param {*} playerID 
+     */
     endTurn(playerID){
         if(
             !this.players[playerID] ||
             this.turn.player != playerID ||
-            this.turn.turnStatus !== Game.endTurnStatus
+            (this.turn.turnStatus !== Game.endTurnStatus && this.turn.turnStatus !== Game.claimStatus) //can finish turn in claim Stage
         ){
             return false;
         }
         this.turn.player = this.getOtherPlayerID(this.turn.player);
         this.turn.turnStatus = Game.playStatus;
+        return true;
     }
 
 
     /**
      * Performs a query to check who has won this game.
      * - Return the player ID of the winner.
-     * - If the game hasn't ended yet, return null.
+     * - If the game hasn't ended yet, return false.
      */
     whoWonTheGame(){
-        //TODO
+        let playersID = this.getPlayersIDArray();
+        for(let playerID of playersID){
+            if(this.hasWonTheGame(playerID)){
+                return playerID;
+            }
+        }
+        return false;
     }
 
     //UTILITIES
+
+    /**
+     * Return true if this player has won the game. Win conditions are:
+     * - Get 3 consecutive flags.
+     * - Get 5 of ther 9 flags.
+     * @param {*} playerID 
+     */
+    hasWonTheGame(playerID){
+        let flagsWon = this.flags.filter(flag => flag.isTakenBy == playerID);
+        if(flagsWon.length >= 5){
+            return true; //5 flags is a win.
+        }
+        if(Game.get3ConsecutiveFlags(flagsWon)){
+            return true // 3 consecutive flags is a win.
+        }
+        return false; //Any other case is a game in progress.
+    }
+
+    /**
+     * Return true if there are 3 consecutive flags (by position) in the flag array.
+     * @param {*} flagsWon 
+     */
+    static get3ConsecutiveFlags(flagsWon){
+        let orderedFlagsWon = flagsWon.sort((flag1, flag2) => flag1.position - flag2.position ); //From lower to higher
+        let consecutiveFlags = 1;
+        for(let i = 0; i < orderedFlagsWon.length -1; i++){
+            if(orderedFlagsWon[i].position +1 == orderedFlagsWon[i+1].position){
+                consecutiveFlags ++;
+                if(consecutiveFlags == 3){
+                    return true;
+                }
+            }else{
+                consecutiveFlags = 1;
+            }
+        }
+        return false;
+    }
+
+
 
 
     /**
