@@ -1,0 +1,57 @@
+#mainContainer {
+    position: relative;
+    background-color: bisque;
+    border: 1px solid sienna;
+    margin-left: 50px;
+    margin-right: 50px;
+    padding: 20px;
+
+    h1 {
+        text-align: center;
+    }
+}
+
+#reset-game-container {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    width: 100px;
+    height: 100px;
+    background-color: crimson;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    transition: 200ms;
+    cursor: pointer;
+}
+
+#reset-game-container:hover{    
+    border: 3px solid darkred;  
+    transition: 200ms;
+}
+
+
+
+
+#centralSpace {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+}
+
+#flags {
+    display: flex;
+    width: 85%;
+}
+
+#deckSpace {
+    width: 15%;
+    padding-left: 20px;
+}
+
+//General styles
+.centered {
+    text-align: center;
+}

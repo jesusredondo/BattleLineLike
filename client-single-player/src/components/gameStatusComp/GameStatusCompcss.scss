@@ -1,0 +1,35 @@
+#game-status-container {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 150px;
+    height: 174px;
+    background-color: rgb(210, 216, 124);
+    color: rgb(59, 58, 37);
+    text-align: center;
+
+    p {
+        font-weight: bold;
+        span {
+            font-weight: lighter;
+        }
+    }
+}
+
+#game-status-container--end-turn-holder {
+    height: 40px;
+    cursor: pointer;
+    h2 {
+        background-color: red;
+        border: 3px solid red;
+        color: whitesmoke;
+        width: 100px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    h2:hover {
+        border: 3px solid firebrick;
+        color: white;
+    }
+}

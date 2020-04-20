@@ -1,0 +1,39 @@
+.show-message{
+    
+
+    position: absolute;
+    top:35%;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    width: 400px;
+    height: 40px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    opacity: 100%;
+    transition: all 200ms;
+}
+
+.show-message--green{
+    background-color: yellowgreen;
+    border-top: 3px solid darkblue ;
+    border-bottom: 3px solid darkblue;
+    color: whitesmoke;
+}
+
+.show-message--red{
+    background-color: firebrick;
+    border-top: 3px solid darkblue ;
+    border-bottom: 3px solid darkblue;
+    color: whitesmoke;
+}
+
+
+.faded{
+    transition: all 200ms;
+    opacity: 0%;
+}

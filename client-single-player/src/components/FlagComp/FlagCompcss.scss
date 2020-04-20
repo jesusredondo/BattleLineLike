@@ -1,0 +1,53 @@
+.flag{
+    width: 100%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+}
+
+
+.flag-image{
+    width: 100%;
+    transition: all 150ms;
+}
+
+.flag-image--grayscale{
+    width: 100%;
+    transition: all 150ms;
+    filter: grayscale(100%);
+}
+
+@keyframes bounceIn {
+    0% {
+      transform: scale(1);
+     
+    }
+
+    15%{
+        text-replace: scale(1.01);
+    }
+    60% {
+      transform: scale(1.05);
+      animation-timing-function: ease-in-out;
+    }
+    80% {
+      transform: scale(1.03);
+    }
+    100%{
+        transform: scale(1);
+    }
+  }
+
+.flag-image--bouncing{
+    cursor: pointer;
+    animation-name: bounceIn;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+    transition: all 150ms;
+}
+
+.flag-image--bouncing:hover{
+    filter: saturate(200%);
+    transition: all 150ms;
+}
+

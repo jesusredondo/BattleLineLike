@@ -1,0 +1,85 @@
+.aspect-container{
+    display: inline-block;
+    position: relative;
+    width: 10%;
+}
+
+.aspect-125{
+    margin-top: 125%;
+}
+
+.card {
+
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    display: grid;
+    grid-template-columns: [left] 10% [middle] auto [right] 10%;
+    grid-template-rows: [top] 10% [middle] auto [bottom] 10%;
+
+    border: 2px solid cadetblue;
+
+    transition: all 150ms;
+}
+
+.card:hover{
+    z-index: 1;
+    transform: scale(1.1);
+    transition: all 150ms;
+}
+
+.card--selected{
+    z-index: 1;
+    transform: scale(1.1);
+    transition: all 150ms;
+    border: 5px solid darkgray !important;
+}
+
+
+
+//CARD POSITIONS:
+
+.card--top-left-corner{
+    grid-column: left;
+    grid-row: top;
+}
+
+.card--bottom-right-corner{
+    grid-column: right;
+    grid-row: bottom;
+}
+
+
+.card-middle{
+    grid-column: middle;
+    grid-row: middle;
+}
+
+
+//COLORS
+.card--bg-color-0{
+    background-color: red;
+}
+
+.card--bg-color-1{
+    background-color: green;
+}
+
+.card--bg-color-2{
+    background-color: blue;
+}
+
+.card--bg-color-3{
+    background-color: yellow;
+}
+
+.card--bg-color-4{
+    background-color: purple;
+}
+
+.card--bg-color-5{
+    background-color: orange;
+}

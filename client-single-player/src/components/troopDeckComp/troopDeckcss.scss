@@ -1,0 +1,17 @@
+.deck{
+    width: 100%;
+}
+
+.deckImage{
+    width: 100%;
+    border: 6px solid rgba(255,255,255,.0);
+    transition: all 0.2s;
+}
+
+.deckImage:hover{
+    transform: scale(1.1);
+    transform: rotate(5deg);
+    border: 6px solid saddlebrown;
+    overflow-y: hidden;
+    transition: all 0.2s;
+}

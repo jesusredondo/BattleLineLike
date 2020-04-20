@@ -289,7 +289,7 @@ Game.playStatus = 0;
 Game.drawStatus = 1;
 Game.claimStatus = 2;
 Game.endTurnStatus = 3;
-Game.statusNames = ['Play a card','Draw a card','Claim a card', 'Finish turn'];
+Game.statusNames = ['Play a card','Draw a card','Claim a Flag', 'Finish turn'];
 
 
 module.exports = Game;
