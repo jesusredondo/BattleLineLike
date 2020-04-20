@@ -51,7 +51,6 @@ class FlagComp extends Component {
         return ( 
             <div className="flag" onClick={()=>this.handleClick()}>
                 {this.renderSide(this.props.p1ID)}
-                <p>flag {this.props.position}</p>
                 <img className={this.renderImageClassesStatus()} src={flagImage} alt="red flag" />
                 {this.renderSide(this.props.p2ID)}
             </div>
