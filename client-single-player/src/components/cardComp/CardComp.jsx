@@ -26,6 +26,7 @@ class CardComp extends Component {
             <div onClick={this.handleCardClick} className={"card card--bg-color-" + this.props.card.color + " " +(this.props.selectedCard && this.props.selectedCard.isSameCardAs(this.props.card) ? "card--selected" : "")}>
                 <div className="card--top-left-corner">{this.props.card.value}</div>
                 <div className="card-middle">
+                    {this.props.card.value}
                 </div>
                 <div className="card--bottom-right-corner">{this.props.card.value}</div>
             </div>

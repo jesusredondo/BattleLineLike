@@ -17,8 +17,8 @@
     right: 0;
 
     display: grid;
-    grid-template-columns: [left] 10% [middle] auto [right] 10%;
-    grid-template-rows: [top] 10% [middle] auto [bottom] 10%;
+    grid-template-columns: [left] 15% [middle] auto [right] 15%;
+    grid-template-rows: [top] 15% [middle] auto [bottom] 15%;
 
     border: 2px solid cadetblue;
 
@@ -45,17 +45,28 @@
 .card--top-left-corner{
     grid-column: left;
     grid-row: top;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .card--bottom-right-corner{
     grid-column: right;
     grid-row: bottom;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 
 .card-middle{
     grid-column: middle;
     grid-row: middle;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 4vh;
+
 }
 
 

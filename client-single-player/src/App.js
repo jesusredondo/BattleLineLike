@@ -6,7 +6,7 @@ import HandPlayerComp from './components/handPlayerComp/HandPlayerComp';
 import Game from './sharedEntities/game';
 import showMessage from './components/utilitiesFunc/showMessages';
 import GameStatusComp from './components/gameStatusComp/GameStatusComp';
-
+import fitty from 'fitty';
 
 
 
@@ -69,7 +69,12 @@ class App extends React.Component {
         this.handleEndTurn = this.handleEndTurn.bind(this);
     }
 
-
+    componentDidMount(){
+        console.log(fitty);
+        console.log(document.querySelector('#reset-game-container'));
+        fitty('#reset-game-container >h2');
+       
+    }
    
 
     setNewGame(){

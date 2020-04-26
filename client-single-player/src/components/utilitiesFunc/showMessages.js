@@ -15,20 +15,9 @@ class Message extends Component {
 
 
     componentDidMount(){
-        //TODO: Is there a better way to handle this with React?
-        setTimeout(()=>{
-            this.setState({fade : ''});
-            setTimeout(()=>{
-                this.setState({fade : 'faded'});
-                setTimeout(()=>{
-                    this.props.renderingComponent.remove();
-                },
-                200);
-            },
-            1000);
-        },
-        3);
-
+    setTimeout(()=>{
+        this.props.renderingComponent.remove();
+    }, 50000);
         
         
     }
